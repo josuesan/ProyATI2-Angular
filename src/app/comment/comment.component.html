@@ -1,0 +1,55 @@
+<div class = "container">
+	<h1 class = "ta-center ff-pacifico">
+	  		Notas
+	</h1>
+	<div class="row">
+		<div class="col-sm-7 col-md-7 col-lg-7">
+			<div class="table-responsive">
+					<table class="table-bordered">
+						<thead>
+							<th> Nota </th>
+							<th> Fecha </th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let p of comments"  > 
+								<td > {{ p.comentario }} </td>
+								<td>  {{ p.fecha }} </td>
+								<td> <a (click)="mostrar(p.id_user,p.id_comment,p.comentario)" class="btn btn-primary" > Editar</a></td>
+								<td> <a (click)="destroy(p.id_user,p.id_comment)" class="btn btn-danger" > Eliminar</a></td>
+							</tr>
+						</tbody>
+
+					</table>
+
+				</div>
+
+		</div>
+		<div id ="mostrar" class="col-sm-5 col-md-5 col-lg-5">
+			<h2 id = "h2new" class = "ta-center ff-pacifico">
+		  		Nueva nota
+			</h2>
+
+			<h2 id = "h2edit" style="display: none" class = "ta-center ff-pacifico">
+		  		Editar nota
+			</h2>
+			<form [formGroup]="myForm" class = "formulario">
+
+			    <div class="form-group" >
+			    	<label>Ingresa tu nota:</label>
+				    <textarea id = "comm" class="form-control" formControlName="comentario" placeholder="Ingresa tu nota"> </textarea>
+				     <div class="alert alert-danger" *ngIf="!myForm.controls['comentario'].valid && myForm.controls['comentario'].touched ">Debes hacer una nota con 10 caracteres mínimos y 140 caracteres máximos.</div>
+				     <input style="display: none"  type="date" class="form-control" formControlName="fecha" placeholder="Fecha de Nacimiento" value = "this.get_Fecha()">
+			    </div>
+		
+			    <div align="center">
+				    <button id = "crear" type="button" class="btn btn-success" (click) = "create_comment()" [disabled]="!myForm.valid">Crear nota</button>
+				     <button style="display: none" id = "editar" type="button" class="btn btn-success" (click) = "edit(this.user,this.comentario)" [disabled]="!myForm.valid">Editar nota</button>
+				   <!--  <button id = "back" type= "button" class="btn btn-default" (click) = this.servicio.backClicked()>Regresar</button> -->
+	   
+			    </div>
+			</form>
+		</div>
+
+	</div>
+	<a id = "agregar" style="display: none"  type="button" class="flotante btn btn-primary" (click) = "mostrar_form()">Agregar nota</a>
+</div>

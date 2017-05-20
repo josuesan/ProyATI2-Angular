@@ -1,15 +1,4 @@
-.formulario{
-	width:50%;
-	margin: 0 auto;
-}
-#show{
-   text-align: center;
-}
 
-#img{
-    width:30%;
-    
-}
 table {
     border-collapse: collapse;
     width: 100%;
@@ -21,6 +10,7 @@ th, td {
     padding: 8px;
     border: 1px solid white;
     text-align: center;
+
 }
 
 tr:nth-child(even){background-color: #f2f2f2}
@@ -28,4 +18,13 @@ tr:nth-child(even){background-color: #f2f2f2}
 th {
     background-color: #4CAF50;
     color: white;
+
+}
+
+#pagar{
+    float: right;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    vertical-align: middle;    
 }

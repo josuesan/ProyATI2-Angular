@@ -88,8 +88,18 @@ export class PerfilComponent implements OnInit {
     $("#labelrepeat").show();
     $("#activar").hide();
     $("#editar").show();
+  }
 
-
+  desactivarCampos(){
+    $("#username").attr("readonly", true);
+    $("#email").attr("readonly", true);
+    $("p").hide();
+    $("#pwd").hide();
+    $("#labelpwd").hide();
+    $("#repeat").hide();
+    $("#labelrepeat").hide();
+    $("#activar").show();
+    $("#editar").hide();
   }
 
   EditPerfil (){
@@ -128,7 +138,7 @@ export class PerfilComponent implements OnInit {
                     this.servicio.msgs = [];}, 5000);
                 }
                 else{  
-                  window.scrollTo(0,0);
+                  this.desactivarCampos();
                   this.serv.set_username(formData.username);
                   this.servicio.msgs = [];
                   

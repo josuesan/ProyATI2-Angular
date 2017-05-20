@@ -1,11 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
+from app.models.comments import Comentarios
 import datetime
 
 from app import db
 
 class Users(db.Model):
+	__tablename__ = 'user'
 	id = db.Column(db.Integer,primary_key=True)
 	username = db.Column(db.String(50),unique=True)
 	email = db.Column(db.String(40),unique=True)
@@ -15,6 +17,7 @@ class Users(db.Model):
 	birthdate = db.Column(db.DateTime)
 	gender = db.Column(db.String(50))
 	admin = db.Column(db.Boolean)
+	comments = db.relationship('Comentarios', backref='user',cascade="all, delete-orphan" ,lazy='dynamic')
 
 	def create_user(self, username, email, password, name, lastName, birthdate,gender,admin):
 		self.name = name

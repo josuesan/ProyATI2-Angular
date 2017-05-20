@@ -14,6 +14,8 @@ from flask_cors import CORS, cross_origin
 from flask_wtf import CsrfProtect
 from app import app, db
 CORS(app)
+
+
 db.create_all()
 csrf = CsrfProtect()
 
@@ -220,8 +222,6 @@ def edit(ide):
 	sesion = Session()
 	usuario = request.headers.get('username')
 	token_angular = request.headers.get('Authorization')
-	print(usuario)
-	print(token_angular)
 	#Verificamos si el usuario tiene una sesión activa
 	if token_angular:
 		if sesion.exist_session(usuario, token_angular):
@@ -281,130 +281,245 @@ def delete(ide):
 #########################################------------CARRITO-------------------#####################################
 @app.route('/carrito', methods = ['GET'])
 def carrito():
-	if 'username' in session:
-		car =Carrito()
-		lista = car.all_car()
-		if lista == 0:
-			respuesta = {'error':True,'mensaje':'No hay artículos en el carrito.'} 
-			return jsonify(respuesta)
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			car =Carrito()
+			lista = car.all_car()
+			if lista == 0:
+				respuesta = {'error':True,'mensaje':'No hay artículos en el carrito.'} 
+				return jsonify(respuesta)
+			number = car.number_car()
+			jsona = car.convert(lista,number)
+			return jsonify(jsona)
 
-		number = car.number_car()
-		jsona = car.convert(lista,number)
-		return jsonify(jsona)
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
 
 @app.route('/agregar_carrito', methods = ['POST'])
 def agregarcarrito():	
-	if 'username' in session:
-		car =productos()
-		datos = request.get_json()
-		car.agg_prod(datos['id_user'],datos['id_prod'])
-		db.session.add(car)
-		db.session.commit()
-		respuesta = {'error':False,'mensaje':'Producto agregado exitosamente.'}
-		return json.dumps(respuesta)
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			car =productos()
+			datos = request.get_json()
+			res = car.exist_prod(datos['id_user'],datos['id_prod'])
+			if res == 1:
+				car.agg_prod(datos['id_user'],datos['id_prod'])
+				db.session.add(car)
+				respuesta = {'error':False,'mensaje':'Producto agregado exitosamente.'}
+			else: 
+				respuesta = {'error':False,'mensaje':'Cantidad aumentada exitosamente.'}
+
+			db.session.commit()
+			return json.dumps(respuesta)
+
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
 
 @app.route('/cant_carrito', methods = ['PUT'])
 def cantcarrito():
-	if 'username' in session:
-		info = request.get_json()
-		car = Carrito()
-		res = car.adm_cant(info['id_user'],info['id_prod'],info['opcion'])
-		if res == 0:
-			#Eliminamos el producto del carrito debido a que se resto la cantidad que estaba en 1
-			oneProd = car.delete_prod(info['id_prod'],info['id_user'])
-			if oneProd != 0:
-				db.session.delete(oneProd)
-			respuesta = {'error':True,'mensaje':'Producto eliminado del carrito.'}
-		else:
-			respuesta = {'error':False,'mensaje':'Cantidad editada exitosamente.'} 
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			info = request.get_json()
+			car = Carrito()
+			res = car.adm_cant(info['id_user'],info['id_prod'],info['opcion'])
+			if res == 0:
+				#Eliminamos el producto del carrito debido a que se resto la cantidad que estaba en 1
+				oneProd = car.delete_prod(info['id_prod'],info['id_user'])
+				if oneProd != 0:
+					db.session.delete(oneProd)
+				respuesta = {'error':False,'mensaje':'Producto eliminado del carrito.'}
+			else:
+				respuesta = {'error':False,'mensaje':'Cantidad editada exitosamente.'} 
 
-		db.session.commit()
-		return jsonify(respuesta)
+			db.session.commit()
+			return jsonify(respuesta)
+
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
 
 
 @app.route('/delete_carrito/<user>/<prod>', methods=['DELETE'])
 def deletecarrito(user,prod):
-	if 'username' in session:
-		if user.isdigit() and prod.isdigit():	
-			car = Carrito()
-			oneProd = car.delete_prod(prod,user)
-			if oneProd == 0:
-				respuesta = {'error':True,'mensaje':'Producto no existe.'}
-				return json.dumps(respuesta)
-			else: 
-				db.session.delete(oneProd)
-				db.session.commit()
-				respuesta = {'error':False,'mensaje':'Producto borrado exitosamente.'}
-				return json.dumps(respuesta)
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			if user.isdigit() and prod.isdigit():	
+				car = Carrito()
+				oneProd = car.delete_prod(prod,user)
+				if oneProd == 0:
+					respuesta = {'error':True,'mensaje':'Producto no existe.'}
+					return json.dumps(respuesta)
+				else: 
+					db.session.delete(oneProd)
+					db.session.commit()
+					respuesta = {'error':False,'mensaje':'Producto borrado del carrito.'}
+					return json.dumps(respuesta)
+
+			respuesta = {'error':True,'mensaje':'Producto o Usuario no existe'}
+			return json.dumps(respuesta)
+
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
+
 
 @app.route('/total_carrito/<user>', methods=['GET'])
 def totalcarrito(user):
-	if 'username' in session:
-		if user.isdigit():	
-			car = Carrito()
-			total = car.get_total_price(user)
-			respuesta = {'total':total }
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			if user.isdigit():	
+				car = Carrito()
+				total = car.get_total_price(user)
+				respuesta = {'total':total }
+				return json.dumps(respuesta)
+
+			respuesta = {'error':True,'mensaje':'Usuario no existe.'}
 			return json.dumps(respuesta)
+
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
+
+@app.route('/pagar/<user>', methods=['GET'])
+def pagar(user):
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			if user.isdigit():	
+				car = Carrito()
+				res = car.all_prod(user)
+				if res == 0:
+					respuesta = {'error':True,'mensaje':'No hay productos en el carrito.'}
+					return json.dumps(respuesta)
+				else:
+					car.aumentar_vendido(user,res)
+					for prod in res:
+						db.session.delete(prod)
+				
+				db.session.commit()
+				respuesta = {'error':False,'mensaje':'Su compra ha sido exitosa.'}
+				return json.dumps(respuesta)
+
+			respuesta = {'error':True,'mensaje':'Usuario no existe.'}
+			return json.dumps(respuesta)
+
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
+
 
 
 
 #########################################------------COMENTARIOS-------------------#####################################
 @app.route('/comentarios', methods = ['GET'])
 def comments():
-	if 'username' in session:
-		comm =Comentarios()
-		lista = comm.all_comments()
-		if lista == 0:
-			respuesta = {'error':True,'mensaje':'No hay comentarios.'} 
-			return jsonify(respuesta)
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			comm =Comentarios()
+			lista = comm.all_comments()
+			if lista == 0:
+				respuesta = {'error':True,'mensaje':'No hay comentarios.'} 
+				return jsonify(respuesta)
 
-		number = comm.number_comments()
-		jsona = comm.convert(lista,number)
-		return jsonify(jsona)
+			number = comm.number_comments()
+			jsona = comm.convert(lista,number)
+			return jsonify(jsona)
+
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
 
 @app.route('/agregar_comentario', methods = ['POST'])
 def agregarcomentario():	
-	if 'username' in session:
-		comm =Comentarios()
-		datos = request.get_json()
-		comm.agg_comment(datos['id_user'],datos['comentario'])
-		db.session.add(comm)
-		db.session.commit()
-		respuesta = {'error':False,'mensaje':'Comentario agregado exitosamente.'}
-		return json.dumps(respuesta)
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			comm =Comentarios()
+			user = Users()
+			user = user.get_user(usuario)
+			datos = request.get_json()
+			comm.agg_comment(user['id'],datos['comentario'],datos['fecha'])
+			db.session.add(comm)
+			db.session.commit()
+			respuesta = {'error':False,'mensaje':'Comentario agregado exitosamente.'}
+			return json.dumps(respuesta)
+
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
 
 @app.route('/editar_comentario', methods = ['PUT'])
 def editarcomentario():
-	if 'username' in session:
-		comm = Comentarios()
-		info = request.get_json()
-		res = comm.get_comment(info['id_user'],info['id_comment'])
-		if res == 0:
-			respuesta = {'error':True,'mensaje':'Comentario no existe.'}
-			return json.dumps(respuesta)			
-		else:
-			comm.edit_comment(info['id_user'],info['id_comment'],info['comentario'])
-			db.session.commit() #guardo los cammbios
-			respuesta = {'error':False,'mensaje':'Comentario editado exitosamente.'}
-			return json.dumps(respuesta)
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			comm = Comentarios()
+			info = request.get_json()
+			res = comm.get_comment(info['id_user'],info['id_comment'])
+			if res == 0:
+				respuesta = {'error':True,'mensaje':'Comentario no existe.'}
+				return json.dumps(respuesta)			
+			else:
+				comm.edit_comment(info['id_user'],info['id_comment'],info['comentario'],info['fecha'])
+				db.session.commit() #guardo los cammbios
+				respuesta = {'error':False,'mensaje':'Comentario editado exitosamente.'}
+				return json.dumps(respuesta)
 
-	respuesta = {'error':True,'mensaje':'Comentario no existe.'}
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
 	return json.dumps(respuesta)
 
 
 @app.route('/delete_comentario/<user>/<comment>', methods=['DELETE'])
 def deletecomentario(user,comment):
-	if 'username' in session:
-		if user.isdigit() and comment.isdigit():	
-			comm = Comentarios()
-			oneComm = comm.delete_comment(comment,user)
-			if oneComm == 0:
-				respuesta = {'error':True,'mensaje':'Comentario no existe.'}
-				return json.dumps(respuesta)
-			else: 
-				db.session.delete(oneComm)
-				db.session.commit()
-				respuesta = {'error':False,'mensaje':'Comentario borrado exitosamente.'}
-				return json.dumps(respuesta)
+	sesion = Session()
+	usuario = request.headers.get('username')
+	token_angular = request.headers.get('Authorization')
+	#Verificamos si el usuario tiene una sesión activa
+	if token_angular:
+		if sesion.exist_session(usuario, token_angular):
+			if user.isdigit() and comment.isdigit():	
+				comm = Comentarios()
+				oneComm = comm.delete_comment(comment,user)
+				if oneComm == 0:
+					respuesta = {'error':True,'mensaje':'Comentario no existe.'}
+					return json.dumps(respuesta)
+				else: 
+					db.session.delete(oneComm)
+					db.session.commit()
+					respuesta = {'error':False,'mensaje':'Comentario borrado exitosamente.'}
+					return json.dumps(respuesta)
+
+			respuesta = {'error':True,'mensaje':'Comentario o Usuario no existe.'}
+			return json.dumps(respuesta)
+
+	respuesta = {'error':True,'mensaje':'Debes iniciar sesión.'}
+	return json.dumps(respuesta)
 
 

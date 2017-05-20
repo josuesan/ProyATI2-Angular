@@ -5,6 +5,7 @@ import  json
 from app import db
 
 class productos(db.Model):
+	__tablename__ = 'product'
 	id = db.Column(db.Integer,primary_key=True)
 	nombre = db.Column(db.VARCHAR(500),unique=True)
 	precio = db.Column(db.Integer)
@@ -56,4 +57,3 @@ class productos(db.Model):
 			return 0 
 		return aux 
 		
-			
