@@ -1,0 +1,51 @@
+<div class="row">
+	<h2 class = "ta-center ff-pacifico">
+  		Registrarse
+	</h2>
+	<div class="col-12">
+		<form [formGroup]="myForm" class= "formulario" (ngSubmit)="register()">
+
+		    <div class="form-group" >
+		    	<input type="text" class="form-control" formControlName="username" placeholder="Nombre de usuario">
+			
+		        <div class="alert alert-danger" *ngIf="!myForm.controls['username'].valid && myForm.controls['username'].touched ">Tu debes colocar un username.</div>
+		        <br>
+				<input type="text" class="form-control" formControlName="name" placeholder="Nombre">
+			
+		        <div class="alert alert-danger" *ngIf="!myForm.controls['name'].valid && myForm.controls['name'].touched ">Tu debes colocar un nombre.</div>
+		        <br>
+			    <input type="text" class="form-control" formControlName="lastname" placeholder="Apellido" >
+			    <div class="alert alert-danger" *ngIf="!myForm.controls['lastname'].valid && myForm.controls['lastname'].touched ">Tu debes colocar un apellido.</div>
+				<br>
+				<select class="form-control" formControlName="gender">
+					<option value="">Género</option> 
+  					<option value="Masculino">Masculino</option>
+  					<option value="Femenino">Femenino</option>
+ 				</select>
+			
+		        <div class="alert alert-danger" *ngIf="!myForm.controls['gender'].valid && myForm.controls['gender'].touched ">Tu debes colocar un género.</div>
+		        <br>
+		        <input type="date" class="form-control" formControlName="birthdate" placeholder="Fecha de Nacimiento">
+			
+		        <div class="alert alert-danger" *ngIf="!myForm.controls['birthdate'].valid && myForm.controls['birthdate'].touched ">Tu debes colocar una fecha.</div>
+		        <br>
+			    <input type="email" class="form-control" formControlName="email" placeholder="Correo">
+			
+		        <div class="alert alert-danger" *ngIf="!myForm.controls['email'].valid && myForm.controls['email'].touched ">Tu debes colocar un correo válido.</div>
+		        <br>
+			    <input type="password" class="form-control" formControlName="password" placeholder="Contraseña" >
+			    <div class="alert alert-danger" *ngIf="!myForm.controls['password'].valid && myForm.controls['password'].touched ">Tu debes colocar un contraseña válida (6 caracteres mínimos).</div>
+			    <br>
+
+			    <input type="password" class="form-control" formControlName="repeat" placeholder="Repita su contraseña" >
+			    <div class="alert alert-danger" *ngIf="!check(myForm.controls['password'].value , myForm.controls['repeat'].value ) && myForm.controls['repeat'].touched">Su contraseñas no son iguales.</div>
+		    </div>
+	
+		    <div align="center">
+			    <button id = "register" type="submit" class="btn btn-success" [disabled]="!myForm.valid">Registrar</button>
+			    <button id = "back" class="btn btn-default" routerLink="/" routerLinkActive="active">Regresar</button>
+   
+		    </div>
+		</form>
+	</div>
+</div>

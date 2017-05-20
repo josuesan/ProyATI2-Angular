@@ -1,0 +1,42 @@
+<div class="row">
+	<h2 class = "ta-center ff-pacifico">
+  		Agregar Producto
+	</h2>
+<div class="col-12">
+	<form [formGroup]="myForm" (ngSubmit)="new()" class = "formulario">
+
+	    <div class="form-group" >
+
+		    <input type="text" class="form-control" formControlName="name" placeholder="Nombre">
+		    <br>
+		    <div class="alert alert-danger" *ngIf="!myForm.controls['name'].valid && myForm.controls['name'].touched ">Tu debes colocar un nombre válido.</div>
+		    <input type="number" class="form-control" formControlName="price" placeholder="Precio" min="0" >
+		    <br>
+		    <div class="alert alert-danger" *ngIf="!myForm.controls['price'].valid && myForm.controls['price'].touched ">Tu debes colocar un precio.</div>
+		    <input type="text" class="form-control" formControlName="description" placeholder="Descripcion">
+		    <br>
+		    <div class="alert alert-danger" *ngIf="!myForm.controls['description'].valid && myForm.controls['description'].touched ">Tu debes colocar una descripcion.</div>
+		    <input type="text" class="form-control" formControlName="img" placeholder="Imagen URL">
+		    <br>
+		    <div class="alert alert-danger" *ngIf="!myForm.controls['img'].valid && myForm.controls['img'].touched ">Tu debes colocar una Imagen.</div>
+		    <input type="number" class="form-control" formControlName="sell" placeholder="Nro de vendidos" min="0">
+		    <br>
+		    <div class="alert alert-danger" *ngIf="!myForm.controls['sell'].valid && myForm.controls['sell'].touched ">Tu debes colocar un numero de ventas.</div>
+		    <select class="form-control" formControlName="category">
+		    	<option value="">Categoría</option>
+		    	<option value="Camisas">Camisas</option>
+		    	<option value="Correas">Correas</option>
+  				<option value="Gorras">Gorras</option>
+  				<option value="Pantalones">Pantalones</option>
+  				<option value="Zapatos">Zapatos</option>
+ 			</select>
+	    </div>
+	    <div align="center">
+	    	<button id = "create" type="submit" class="btn btn-success" >Crear</button>
+	    
+	    </div>
+
+	</form>
+</div>
+</div>
+<br>

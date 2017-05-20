@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h1>REGISTRO</h1>
+	<form action="registro" id="register" name="register" method="POST">
+		<input type="text" name="username" placeholder="usuario" required="required">
+		<input type="text" name="email" placeholder="email" required="required">
+		<input type="password" name="password" placeholder="contrasena" required="required">
+		<input type="text" name="name" placeholder="nombre" required="required">
+		<input type="text" name="lastname" placeholder="apellido" required="required">
+		<input type="date" name="birthdate" max="2000-01-01" max="1900-01-01" required="required">
+		<select name="gender" form="register">
+  			<option value="M">M</option>
+  			<option value="F">F</option>
+ 		</select>
+		<button type="submit">Registrarse</button>
+	</form>
+</body>
+</html>

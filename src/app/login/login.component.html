@@ -1,0 +1,26 @@
+<div class="row">
+	<h2 class = "ta-center ff-pacifico">
+  		Iniciar sesión
+	</h2>
+	<br>
+	<div class="col-12">
+		<form [formGroup]="myForm" (ngSubmit)="log()" class = "formulario">
+
+		    <div class="form-group" >
+
+			    <input type="text" class="form-control" formControlName="username" placeholder="Username">
+			
+		        <div class="alert alert-danger" *ngIf="!myForm.controls['username'].valid &&myForm.controls['username'].touched ">Tu debes colocar un Username válido.</div>
+		        <br>
+			    <input type="password" class="form-control" formControlName="password" placeholder="Contraseña" >
+			    <div class="alert alert-danger" *ngIf="!myForm.controls['password'].valid &&myForm.controls['password'].touched ">Tu debes colocar un contraseña válida.</div>
+		    </div>
+	
+		    <div align="center">
+			    <button id = "login" type="submit" class="btn btn-success" [disabled]="!myForm.valid">Iniciar Sesión</button>
+			    <button id = "back" class="btn btn-default" routerLink="/" routerLinkActive="active">Regresar</button>
+   
+		    </div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,14 @@
+<div class ="container">
+	<h2 class = "ta-center ff-pacifico"> {{ product.name }} </h2> 
+	<div id ="show" class="row">
+		<img id = "img" class = "img-thumbnail img-responsive" src="{{product.img}}" /> 
+
+		<p>{{ product.price }} </p> 
+		<p> {{ product.description }}</p>
+		<button  (click)="this.editar(product.id)" *ngIf="this.serv.get_exist_user()" class="boton btn btn-primary" > Editar </button>
+		<!-- <button class="btn btn-primary" *ngIf="this.serv.get_exist_user()"  (click)="this.edit(product.id)"> Editar </button> -->
+		<button class="boton btn btn-danger" *ngIf="this.serv.get_exist_user()"  (click)="this.destroy(product.id)"> Borrar </button>
+	</div>
+</div>
+
+

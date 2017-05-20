@@ -1,0 +1,30 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand ff-pacifico" href="#" routerLink="/" routerLinkActive="active">{{title}}</a>
+    </div>
+    <ul class="nav navbar-nav">
+      
+      <li><a routerLink="/productos" routerLinkActive="active">Productos</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a *ngIf="this.serv.get_no_exist_user()" routerLink="/register" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a *ngIf="this.serv.get_no_exist_user()" routerLink="/login" routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+     
+
+      <li><a *ngIf="this.serv.get_local_storage()"> ¡Hola {{this.serv.get_username()}}!</a></li>
+
+      <li><a *ngIf="this.serv.get_local_storage()" routerLink="/perfil" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
+      <li><a *ngIf="this.serv.get_local_storage()" routerLink="/productos/agregar" routerLinkActive="active"><span class="fa fa-pencil-square-o"></span> Agregar producto</a></li>
+      <li><a *ngIf="this.serv.get_local_storage()" (click)=this.serv.logout() routerLinkActive="active"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+    </ul>
+  </div>
+</nav>
+<h1 class = "ff-pacifico">
+  {{title}}
+</h1>
+<p-messages [value]=this.servicio.msgs></p-messages>
+<div class="container" >
+    <router-outlet> </router-outlet>
+</div>

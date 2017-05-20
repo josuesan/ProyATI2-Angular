@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+
+.fs-small{
+  font-size: 18px; 
+}
+
+.fs-med{
+  font-size: 24px; 
+}
+
+.fs-big{
+  font-size: 32px; 
+}
+
+.ff-indieflower{
+  font-family: 'Indie Flower', sans-serif;
+}
+
+.ff-pacifico{
+  font-family: 'Pacifico', sans-serif;
+}
+
+
+.ta-justify{
+  text-align: justify;
+}
+
+.ta-right{
+  text-align : right;
+}
+
+.ta-center{
+  text-align : center;
+}
+
+.panel-body{
+	background-color: black;
+}
+#panelbody-id_1{
+	background-color: black;
+}
+.panel-heading h4{
+	text-align: center;
+}

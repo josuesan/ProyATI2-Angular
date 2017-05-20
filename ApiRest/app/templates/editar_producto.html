@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h1>EDITAR PRODUCTO</h1>
+	<form action="/editar/{{ident}}" id="editar" name="editar" method="POST">
+		<input type="text" value = "{{nombre}}" name="nombre" placeholder="nombre">
+		<input type="text" value = "{{precio}}" name="precio" placeholder="precio">
+		<input type="text" value = "{{foto}}" name="foto" placeholder="foto">
+		<input type="text" value = "{{descripcion}}" name="descripcion" placeholder="descripcion">
+		<input type="text" value = "{{categoria}}" name="categoria" placeholder="categoria">
+		<input type="number" value = "{{vendido}}" name="vendido" placeholder="vendido" min="0">
+		<button type="submit">Cambiar</button>
+	</form>
+</body>
+</html>
