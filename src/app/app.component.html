@@ -4,7 +4,7 @@
       <a class="navbar-brand ff-pacifico" routerLink="/" routerLinkActive="active">{{title}}</a>
     </div>
     <ul class="nav navbar-nav">
-      <li [routerLinkActive]="['active']"><a routerLink="/productos">Productos</a></li>
+      <li [routerLinkActive]="['active']"><a routerLink="/productos" routerLinkActive="active">Productos</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li [routerLinkActive]="['active']"><a *ngIf="this.serv.get_no_exist_user()" routerLink="/register" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>

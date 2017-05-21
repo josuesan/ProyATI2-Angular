@@ -53,7 +53,7 @@ export class CommentComponent implements OnInit {
 			.subscribe(data => {
 				if (data.json().error == true){
 					this.servicio.msgs = [];
-        			this.servicio.msgs.push({severity:'warn', summary:'Alerta', detail:data.json().mensaje});
+        			this.servicio.msgs.push({severity:'info', summary:'', detail:data.json().mensaje});
 					this.comments = [];
 					setTimeout(() => {
     					this.servicio.msgs = []; }, 5000);
@@ -94,12 +94,12 @@ export class CommentComponent implements OnInit {
   mostrar_form(){
   	window.scrollTo(0,0);
   	$("#h2edit").hide();
-	$("#h2new").show();
-  	$("#comm").val('');
-	$("#crear").show();
-	$("#editar").hide();
-	$("#agregar").hide();
-
+  	$("#h2new").show();
+    $("#crear").show();
+  	$("#comm").val("");
+    $("#crear").attr('disabled',true)
+  	$("#editar").hide();
+  	$("#agregar").hide();
   }
 
   	destroy(id_user,id_comment){

@@ -1,13 +1,51 @@
-<div class ="container">
+<!-- <div class ="container">
 	<h1 class = "ta-center ff-pacifico"> {{ product.name }} </h1> 
+	<br>
 	<div id ="show" class="row">
-		<img id = "img" class = "img-thumbnail img-responsive" src="{{product.img}}" /> 
-		<p>{{ product.price }} </p> 
-		<p> {{ product.description }}</p>
-		<button  (click)="this.editar(product.id)" *ngIf="this.serv.get_exist_user()" class="boton btn btn-primary" > Editar </button>
-		<!-- <button class="btn btn-primary" *ngIf="this.serv.get_exist_user()"  (click)="this.edit(product.id)"> Editar </button> -->
-		<button class="boton btn btn-danger" *ngIf="this.serv.get_exist_user()"  (click)="this.destroy(product.id)"> Borrar </button>
+		<div class="col-sm-6 col-md-6 col-lg-6">
+			<img id = "img" class = "img-thumbnail img-responsive" src="{{product.img}}" /> 
+		</div>
+		
+		<div class="col-sm-6 col-md-6 col-lg-6">
+
+			<label>Precio:</label>
+			<p>{{ product.price }} Bs </p>
+			<label>Categoría:</label>
+			<p>{{ product.category }} </p>
+			<label>N° de veces vendido:</label>
+			<p> {{ product.sell }}</p> 
+			<label>Descripción:</label>
+			<p> {{ product.description }}</p>
+			<button  (click)="this.editar(product.id)" *ngIf="this.serv.get_exist_user()" class="boton btn btn-primary" > Editar </button>
+			<button class="boton btn btn-danger" *ngIf="this.serv.get_exist_user()"  (click)="this.destroy(product.id)"> Borrar </button>
+			<button *ngIf="this.serv.get_exist_user()" (click) = "agregar_carrito(product.id)" title="Agregar al carrito" class="boton btn btn-default"><span class=" glyphicon glyphicon-shopping-cart"></span></button>
+		</div>
 	</div>
 </div>
 
 
+ -->
+<div class="container contenido">
+	 <div class="container thumbnail">
+	    <div class="col-lg-6 col-md-8 "> 
+	            <div class="thumbnail">
+	                <img id = "img" class = "img-thumbnail img-responsive" src="{{product.img}}" /> 
+	            </div>
+	    </div>
+	    <div class="col-lg-4">
+	        <div class="caption">
+	            <h2 class="ff-pacifico">{{ product.name }}</h2>
+	            <h3>{{ product.price }} Bs</h3>
+	            <label>Categoría:</label>
+	            <h5>{{ product.category }}</h5>
+	            <label>Descripción:</label>
+	            <h5>{{ product.description }}</h5>
+	            <label>N° de veces vendido:</label>
+	            <h5>{{ product.sell }}</h5>
+	            <button  (click)="this.editar(product.id)" *ngIf="this.serv.get_exist_user()" class="boton btn btn-primary" > Editar </button>
+				<button class="boton btn btn-danger" *ngIf="this.serv.get_exist_user()"  (click)="this.destroy(product.id)"> Borrar </button>
+	            <button  *ngIf="this.serv.get_exist_user()"  (click) = "agregar_carrito(product.id)" class="btn btn-default" role="button"><span class="fa fa-cart-plus">Añadir al carrito</span></button> 
+	        </div>
+	    </div>
+	</div>
+</div>

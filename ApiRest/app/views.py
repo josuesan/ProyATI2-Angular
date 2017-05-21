@@ -171,13 +171,23 @@ def list():
 	prod =productos()
 	lista = prod.all_prod()
 	if lista == 0:
-		respuesta = {'error':True,'mensaje':'No hay artículos disponibles'} 
-		print(jsonify(respuesta))
+		respuesta = {'error':True,'mensaje':'No hay artículos disponibles.'} 
 		return jsonify(respuesta)
 
 	number = prod.number_prod()
 	jsona = prod.convert(lista,number)
-	print(jsona)
+	return jsonify(jsona)
+
+@app.route('/listar_destacados', methods = ['GET'])
+def listdestacados():
+	prod =productos()
+	lista = prod.get_prod_destacados()
+	if lista == 0:
+		respuesta = {'error':True,'mensaje':'No hay artículos disponibles.'} 
+		return jsonify(respuesta)
+
+	number = len(lista)
+	jsona = prod.convert(lista,number)
 	return jsonify(jsona)
 
 @app.route('/listar/<ide>', methods = ['GET'])
@@ -193,6 +203,36 @@ def part(ide):
 			oneProd = prod.get_prod(_id)
 			return json.dumps(oneProd)
 	respuesta = {'error':True,'mensaje':'Producto no existe.'}
+	return json.dumps(respuesta)
+
+@app.route('/listar_category/<category>', methods = ['GET'])
+def listcategory(category):
+	prod =productos()
+	lista = prod.get_prod_category(category)
+	if lista == []:
+		respuesta = {'error':True,'mensaje':'No existen productos en esa categoría.'}
+		return json.dumps(respuesta)
+	else:
+		number = len(lista)
+		jsona = prod.convert(lista,number)
+		return json.dumps(jsona)
+
+	respuesta = {'error':True,'mensaje':'No existen productos en esa categoría.'}
+	return json.dumps(respuesta)
+
+@app.route('/listar_ord/<nom_precio>', methods = ['GET'])
+def listnombreprecio(nom_precio):
+	prod =productos()
+	lista = prod.get_prod_ord(nom_precio)
+	if lista == []:
+		respuesta = {'error':True,'mensaje':'No existen productos en esa categoría.'}
+		return json.dumps(respuesta)
+	else:
+		number = len(lista)
+		jsona = prod.convert(lista,number)
+		return json.dumps(jsona)
+
+	respuesta = {'error':True,'mensaje':'No existen productos en esa categoría.'}
 	return json.dumps(respuesta)
 
 
@@ -307,11 +347,13 @@ def agregarcarrito():
 	#Verificamos si el usuario tiene una sesión activa
 	if token_angular:
 		if sesion.exist_session(usuario, token_angular):
-			car =productos()
+			car =Carrito()
+			user = Users()
+			datos_user = user.get_user(usuario)
 			datos = request.get_json()
-			res = car.exist_prod(datos['id_user'],datos['id_prod'])
+			res = car.exist_prod(datos_user['id'],datos['id_prod'])
 			if res == 1:
-				car.agg_prod(datos['id_user'],datos['id_prod'])
+				car.agg_prod(datos_user['id'],datos['id_prod'])
 				db.session.add(car)
 				respuesta = {'error':False,'mensaje':'Producto agregado exitosamente.'}
 			else: 
@@ -441,7 +483,7 @@ def comments():
 			comm =Comentarios()
 			lista = comm.all_comments()
 			if lista == 0:
-				respuesta = {'error':True,'mensaje':'No hay comentarios.'} 
+				respuesta = {'error':True,'mensaje':'No hay notas almacenadas.'} 
 				return jsonify(respuesta)
 
 			number = comm.number_comments()

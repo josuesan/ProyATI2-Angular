@@ -22,7 +22,7 @@ export class ProductsList {
 			.subscribe(data => {
 				if (data.json().error == true){
 					this.servicio.msgs = [];
-        			this.servicio.msgs.push({severity:'warn', summary:'Alerta', detail:data.json().mensaje});
+        			this.servicio.msgs.push({severity:'info', summary:'', detail:data.json().mensaje});
 					this.products = [];
 					setTimeout(() => {
     					this.servicio.msgs = []; }, 5000);
@@ -41,13 +41,14 @@ export class ProductsList {
 			.subscribe(data => {
 				if (data.json().error == true){
 					this.servicio.msgs = [];
-        			this.servicio.msgs.push({severity:'warn', summary:'Alerta', detail:data.json().mensaje});
-					this.products = [];
+        			this.servicio.msgs.push({severity:'info', summary:'', detail:data.json().mensaje});
 					setTimeout(() => {
     					this.servicio.msgs = []; }, 5000);
 				}
 				else{
+					$(".product-list").empty();
 					this.products = data.json();
+					this.list(this.products);
 				}
       		}, error => {
           		console.log(error.json());
@@ -60,9 +61,9 @@ export class ProductsList {
 	list (productos){
     	var tam = productos.length ;
     	var i;
-    	console.log(productos);
+    	//console.log(productos);
     	for (i = 0; i < tam; i++) {
-	      console.log("producto con ventas de :"+productos[i].sell);
+	      //console.log("producto con ventas de :"+productos[i].sell);
 	      var fila = $('<div/>', {
 	        'class' : 'col-sm-6 col-md-6 col-lg-4',
 	        'id'    : 'Fila_' + i
@@ -105,14 +106,64 @@ export class ProductsList {
 	      });
 	      $("#panelbody-id_"+i).append(panelbody);
 
-	      var precio = $("<p></p>").text("Precio: "+productos[i].price+"BsF");
+	      var precio = $("<p></p>").text("Precio: "+productos[i].price+"Bs");
 	      $("#panelfooter-id_"+i).append(precio);
 
 	      panelfooter = $('<a/>', {
-	        'href'    : '/producto/' + productos[i].id
+	        'href'    : '/producto/' + productos[i].id,
+	        'class'   : 'btn btn-default'
 	      });
 	      panelfooter.text("Ver mas");
 	      $("#panelfooter-id_"+i).append(panelfooter);      
     	}   
   	};
+
+  	ord_categoria(ordenar){
+  		if (ordenar == "Zapatos" || ordenar == "Correas" || ordenar == "Pantalones" || ordenar == "Camisas" || ordenar == "Gorras"){
+
+  			this.http.get('http://localhost:5000/listar_category/'+ordenar)
+			.subscribe(data => {
+				if (data.json().error == true){
+					$(".product-list").empty();
+					this.servicio.msgs = [];
+        			this.servicio.msgs.push({severity:'info', summary:'', detail:data.json().mensaje});
+					this.products = [];
+					setTimeout(() => {
+    					this.servicio.msgs = []; }, 5000);
+				}
+				else{
+					$(".product-list").empty();
+					this.products = data.json();
+					this.list(this.products);
+				}
+      		}, error => {
+          		console.log(error.json());
+      		});
+  		}
+  		else if(ordenar == "Todos"){
+  			this.refresh();
+  		}
+  		else
+  		{
+  			this.http.get('http://localhost:5000/listar_ord/'+ordenar)
+			.subscribe(data => {
+				if (data.json().error == true){
+					$(".product-list").empty();
+					this.servicio.msgs = [];
+        			this.servicio.msgs.push({severity:'info', summary:'', detail:data.json().mensaje});
+					this.products = [];
+					setTimeout(() => {
+    					this.servicio.msgs = []; }, 5000);
+				}
+				else{
+					$(".product-list").empty();
+					this.products = data.json();
+					this.list(this.products);
+				}
+      		}, error => {
+          		console.log(error.json());
+      		});
+
+  		}
+  	}
 }

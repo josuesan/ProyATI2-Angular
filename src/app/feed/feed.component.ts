@@ -13,13 +13,13 @@ declare var $:any;
 export class FeedComponent implements OnInit {
 	private products;
   private indiceInf = 0;
-  private indiceSup = 5;
+  private indiceSup = 6;
   constructor(public http: Http, public servicio: MsgService) {
-		this.http.get('http://localhost:5000/listar')
+		this.http.get('http://localhost:5000/listar_destacados')
 			.subscribe(data => {
 				if (data.json().error == true){
 					this.servicio.msgs = [];
-        	this.servicio.msgs.push({severity:'warn', summary:'Alerta', detail:data.json().mensaje});
+        	this.servicio.msgs.push({severity:'info', summary:'', detail:data.json().mensaje});
 					this.products = [];
 					setTimeout(() => {
     					this.servicio.msgs = []; }, 5000);
@@ -27,7 +27,7 @@ export class FeedComponent implements OnInit {
 				else{
 					this.products = data.json();
           this.listFav(this.products,this.indiceInf,this.indiceSup);
-					console.log(this.products);
+					//console.log(this.products);
 				}
       		}, error => {
           		console.log(error.json());
@@ -40,18 +40,23 @@ export class FeedComponent implements OnInit {
     this.indiceInf=indiceInf;
     this.indiceSup=indiceSup;
   }  
+
   listFav (productos,indiceInf,indiceSup){
     var tam = productos.length ;
     var i;
-    console.log(productos);
+    //console.log(productos);
     if (tam <= indiceInf) {
-      alert("No hay productos");
+      window.scrollTo(0,0);
+      this.servicio.msgs = [];
+      this.servicio.msgs.push({severity:'info', summary:'', detail:'No hay más productos disponibles en esta sección.'});
+      setTimeout(() => {
+      this.servicio.msgs = []; }, 5000);
     }
     if (tam < indiceSup) {
       indiceSup = tam;
     }
     for (i = indiceInf; i < indiceSup; i++) {
-      console.log("producto con ventas de :"+productos[i].sell);
+      //console.log("producto con ventas de :"+productos[i].sell);
       var fila = $('<div/>', {
         'class' : 'col-sm-6 col-md-6 col-lg-4',
         'id'    : 'Fila_' + i
@@ -94,17 +99,18 @@ export class FeedComponent implements OnInit {
       });
       $("#panelbody-id_"+i).append(panelbody);
 
-      var precio = $("<p></p>").text("Precio: "+productos[i].price+"BsF");
+      var precio = $("<p></p>").text("Precio: "+productos[i].price+"Bs");
       $("#panelfooter-id_"+i).append(precio);
 
       panelfooter = $('<a/>', {
-        'href'    : '/producto/' + productos[i].id
+        'href'    : '/producto/' + productos[i].id,
+        'class'   : 'btn btn-default'
       });
       panelfooter.text("Ver mas");
       $("#panelfooter-id_"+i).append(panelfooter);
 
     }
     //indiceSup = indiceSup +5;
-    this.ModificarIndices(indiceSup,indiceSup+5);    
+    this.ModificarIndices(indiceSup,indiceSup+6);    
   };
 }

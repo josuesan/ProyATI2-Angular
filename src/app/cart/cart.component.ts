@@ -43,7 +43,7 @@ export class CartComponent implements OnInit {
   		this.http.get('http://localhost:5000/carrito',{ headers: headers })
 			.subscribe(data => {
 				if (data.json().error == true){
-					console.log(data.json)
+					//console.log(data.json)
 					this.servicio.msgs = [];
         			this.servicio.msgs.push({severity:'info', summary:'', detail:data.json().mensaje});
         			$("#pagar").hide();
@@ -139,7 +139,7 @@ export class CartComponent implements OnInit {
     					this.servicio.msgs = []; }, 5000);
 				}
 				else{
-					$('#TotalPay').text(data.json().total+"$");
+					$('#TotalPay').text(data.json().total+"Bs");
 				}
       		}, error => {
           		console.log(error.json());

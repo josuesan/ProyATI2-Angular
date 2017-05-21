@@ -7,7 +7,7 @@ from app import db
 
 class Carrito(db.Model):
 	id_user = db.Column(db.Integer,primary_key=True)
-	id_prod = db.Column(db.Integer,primary_key=True)
+	id_prod = db.Column(db.Integer,db.ForeignKey('product.id'),primary_key=True)
 	nombre_producto = db.Column(db.VARCHAR(500))
 	imagen = db.Column(db.VARCHAR(500))
 	precio = db.Column(db.Integer)
@@ -20,7 +20,7 @@ class Carrito(db.Model):
 		product = prod.get_prod(id_prod)
 		self.nombre_producto = product['name']
 		self.precio = product['price']
-		self.imagen = product['foto']
+		self.imagen = product['img']
 		self.cantidad = 1
 
 	def exist_prod(self,id_user,id_prod):

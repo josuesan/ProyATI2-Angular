@@ -42,7 +42,7 @@ export class Product implements OnInit{
 				}
 		      	else
 		      	{
-		      		console.log(this.product);
+		      		//console.log(this.product);
 		      		this.product = data.json();   
 		            setTimeout(() => {
     					this.servicio.msgs = []; }, 5000);
@@ -59,6 +59,38 @@ export class Product implements OnInit{
 
 		this.show(this.id);
 
+	}
+
+	agregar_carrito(id_prod){
+
+	  	var headers = new Headers();
+	    headers.append('Content-Type', 'application/json');
+
+	    if (this.serv.get_local_storage()!= null) {
+	      headers.append( 'Authorization', this.serv.get_local_storage());
+	      headers.append( 'username', this.serv.get_username());
+	    }
+	    var json = {'id_prod':id_prod};
+	    this.http.post('http://localhost:5000/agregar_carrito', JSON.stringify(json),{ headers: headers })      
+	  	.subscribe(data => {
+	              if (data.json().error == true){
+	                this.servicio.msgs = [];
+	                this.servicio.msgs.push({severity:'error', summary:'Error', detail:data.json().mensaje});
+	                setTimeout(() => {
+	                  this.servicio.msgs = [];}, 5000);
+	              }
+	              else{ 
+	                this.router.navigate(['./carrito']); 
+	                this.servicio.msgs = [];
+	                this.servicio.msgs.push({severity:'success', summary:'', detail:data.json().mensaje});
+	                setTimeout(() => {
+	                this.servicio.msgs = [];
+	                
+	                }, 5000);
+	              }
+	      }, error => {
+	          console.log(error.json());
+	      });
 	}
 
 	destroy(id){

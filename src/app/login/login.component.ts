@@ -23,6 +23,13 @@ export class LoginComponent implements OnInit {
   	}
 
   	ngOnInit() {
+     if (this.serv.get_local_storage() != null){
+        this.servicio.msgs = [];
+        this.servicio.msgs.push({severity:'warn', summary:'', detail:'Ya has iniciado sesión.'});
+        this.router.navigate(['']);
+        setTimeout(() => {
+        this.servicio.msgs = []; }, 5000);
+      }
   	}
 
   log () {

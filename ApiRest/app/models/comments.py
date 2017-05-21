@@ -17,7 +17,7 @@ class Comentarios(db.Model):
 		self.fecha = fecha
 
 	def all_comments(self):		
-		aux = Comentarios.query.all()
+		aux = Comentarios.query.order_by(Comentarios.fecha.asc()).all()
 		tam = len(aux)
 		if tam == 0:
 			return 0

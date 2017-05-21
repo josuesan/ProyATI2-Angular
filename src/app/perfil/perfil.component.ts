@@ -69,11 +69,16 @@ export class PerfilComponent implements OnInit {
   }
 
   check(value1, value2) {
-    if (value1 == value2){
+    var tam1 = value1.toString().length;
+    var tam2 = value2.toString().length;
+    if ((tam1 == 0 && tam2 == 0) || (tam1 >= 6 && tam2 >= 6)  && value1 == value2){
+      $("#editar").attr('disabled',false);
       return true;
     }
     else{
+      $("#editar").attr('disabled',true);
       return false;
+      
     } 
   }
 
