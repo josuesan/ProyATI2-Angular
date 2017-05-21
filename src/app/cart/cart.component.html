@@ -1,0 +1,96 @@
+
+<div class="container">
+  <h1 class = "ff-pacifico ta-center">Carrito de compras</h1>
+  <div class="row">
+  	<div class="table-responsive">
+	  	<table class="table table-bordered table_prod">
+	  		<thead>
+	  			<th>Imagen</th>
+	  			<th>Nombre</th>
+	  			<th>Precio</th>
+	  			<th>Cantidad</th>
+	  			<th>Borrar</th>
+	  		</thead>
+	  		<tbody class="feed"> 
+	  			<tr *ngFor="let p of carrito" > 
+	  				<td>  <img class="img-thumbnail img-responsive" width="150px" src="{{p.img}}"/> </td>
+					<td > {{ p.name_prod }} </td>
+					<td>  {{ p.price }} $ </td>
+					<td> {{p.cant}}  
+					<input type="button" class="btn btn-primary" value="+" (click)="cant(p.id_user,p.id_prod,'sumar')">
+	    			<input type="button" class="btn btn-primary" value="-" (click)="cant(p.id_user,p.id_prod,'restar')">
+	    			</td>
+	    			<td>
+	    				<input type="button" class="btn btn-primary" value="Borrar" (click)="delete(p.id_user,p.id_prod)">
+	    			</td>
+					
+				</tr>			
+	  		</tbody>
+	  	</table>
+	  	<button style="display: none" id ="pagar" class="btn btn-success" data-toggle="modal" data-target="#Checkout" (click)="factura(this.user)"> Pagar</button>
+	</div>
+  </div>
+</div>
+<div class="modal fade" id="Checkout" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class = "ff-pacifico">Introduce tus datos para realizar la compra</h2>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+					    <label for="Foto">Numero de tarjeta de crédito:</label>
+					    <input type="text" class="form-control" id="foto" name="foto">
+					</div>
+					<div class="form-group">
+					    <label for="pwd">Nombre tarjetahabiente:</label>
+					    <input type="text" class="form-control" id="nombre" name="nombre">
+					</div>
+					<div class="form-group">
+					    <label for="descripcion">Cédula:</label>
+					    <input type="text" class="form-control" id="descripcion" name="descripcion">
+					</div>
+					<div class="form-group">
+					    <label for="descripcion">Numero de telefono:</label>
+					    <input type="text" class="form-control" id="descripcion" name="descripcion">
+					</div>
+					<div class="form-group">
+					    <label for="descripcion">Direccion de envío:</label>
+					    <input type="text" class="form-control" id="descripcion" name="descripcion">
+					</div>
+				</form>
+				<h3 class = "ff-pacifico">Factura digital</h3>
+					<table class="table table-bordered">
+					  	<thead>
+					  		<th>Nombre del Producto</th>
+					  		<th>Cantidad</th>
+					  		<th>Precio</th>					  			
+					  	</thead>
+					  	<tbody class="products_list">
+					  		<tr *ngFor="let p of carrito" > 
+					  			<td > {{ p.name_prod }} </td>
+								<td>  {{ p.price }} $ </td>
+								<td> {{p.cant}} 
+					  		</tr>
+					  			
+					  	</tbody>
+					</table>					
+				<strong><p class="ta-right">Su pago total es:</p></strong>
+				<strong><p id="TotalPay" class="ta-right"></p></strong>
+			</div>
+			<div class="modal-footer">
+				<input type="button" class="btn btn-primary" data-dismiss="modal" value="Regresar" onclick="acomodar()">
+				<input type="button" class="btn btn-primary" data-dismiss="modal" value="Pagar" (click)="pagar(this.user)">
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+	function acomodar(){
+		$(".products_list").find("tr").remove();
+		$(".products_list").find("td").remove();
+
+	}
+</script>

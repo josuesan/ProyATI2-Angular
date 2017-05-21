@@ -15,7 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MsgService } from './msg.service';
 import { LocalStorageService } from './localstorage.service';
 import { PerfilComponent } from './perfil/perfil.component';
-import { FeedComponent } from './feed/feed.component';
+import { CommentComponent } from './comment/comment.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FeedComponent } from './feed/feed.component';
     LoginComponent,
     RegisterComponent,
     PerfilComponent,
-    FeedComponent
+    CommentComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

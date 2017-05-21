@@ -1,11 +1,35 @@
 <div class ="container">
-	<h2 class = "ta-center ff-pacifico">
+	<h1 class = "ta-center ff-pacifico">
   		Lista de productos
-	</h2>
+	</h1>
+	<br>
 	<div class="row">
-		<div class="col-sm-12 col-md-12 col-lg-12 product-list">
-			
+		<div class="col-sm-12 col-md-12 col-lg-12">
+			<div class="table-responsive">
+				<table class="table-bordered">
+					<thead>
+						<th> Nombre </th>
+						<th> Precio </th>
+						<th> Imagen </th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let p of products"  > 
+							<td > {{ p.name }} </td>
+							<td>  {{ p.price }} $ </td>
+							<td>  <img class="img-thumbnail img-responsive" width="200px" src="{{p.img}}"/> </td>
+							<td> <a (click)="show(p.id)" class="btn btn-primary" > Ver</a></td>
+						</tr>
+					</tbody>
+
+				</table>
+
+			</div>
+			<br>
+			<!-- <a routerLink="agregar" class="btn btn-primary" *ngIf="this.serv.get_exist_user()" > Agregar producto </a> -->
 		</div>
+		<!-- <div class="col-sm-6 col-md-6 col-lg-6">
+			<product-show #product (Refresh)="refresh()" (Edit)="editar($event)"> </product-show>
+		</div> -->
 	</div>
 </div>
 

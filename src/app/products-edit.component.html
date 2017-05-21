@@ -1,7 +1,7 @@
 <div class="row">
-	<h2 class = "ta-center ff-pacifico">
+	<h1 class = "ta-center ff-pacifico">
   		Editar Producto
-	</h2>
+	</h1>
 <div class="col-12">
 	<form [formGroup]="myForm" (ngSubmit)="new()" class = "formulario">
 
@@ -13,7 +13,7 @@
 		    <input type="number" class="form-control" formControlName="price" placeholder="Precio" min="0" >
 		    <br>
 		    <div class="alert alert-danger" *ngIf="!myForm.controls['price'].valid && myForm.controls['price'].touched ">Tu debes colocar un precio .</div>
-		    <input type="text" class="form-control" formControlName="description" placeholder="Descripcion">
+		    <textarea class="form-control" formControlName="description" placeholder="Descripcion"></textarea>
 		    <br>
 		    <div class="alert alert-danger" *ngIf="!myForm.controls['description'].valid && myForm.controls['description'].touched ">Tu debes colocar una descripcion.</div>
 		    <input type="text" class="form-control" formControlName="img" placeholder="Imagen URL">

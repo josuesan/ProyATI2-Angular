@@ -1,19 +1,16 @@
 .formulario{
-	width:50%;
+	width:100%;
 	margin: 0 auto;
 }
-#show{
-   text-align: center;
-}
-
-#img{
-    width:30%;
+#mostrar{
     
 }
+
 table {
     border-collapse: collapse;
-    width: 100%;
+    margin: 0 auto;
 }
+
 
 
 th, td {
@@ -28,4 +25,11 @@ tr:nth-child(even){background-color: #f2f2f2}
 th {
     background-color: #4CAF50;
     color: white;
+}
+
+.flotante {
+    display:scroll;
+    position:fixed;
+    bottom:30px;
+    right:30px;
 }

@@ -1,7 +1,7 @@
 <div class="row">
-	<h2 class = "ta-center ff-pacifico">
+	<h1 class = "ta-center ff-pacifico">
   		Perfil
-	</h2>
+	</h1>
 	<div class="col-12">
 		<form [formGroup]="myForm" class= "formulario">
 
@@ -41,7 +41,7 @@
 		    <div align="center">
 		    	 <button id = "activar" type="submit" class="btn btn-primary" (click)="activarCampos()" >Editar Perfil</button>
 			    <button id = "editar" type="submit" class="btn btn-success" style="display: none"  [disabled]="!myForm.valid" (click)=" EditPerfil()" >Finalizar edición</button>
-			    <button id = "back" class="btn btn-default" routerLink="/" routerLinkActive="active">Regresar</button>
+			    <button id = "back" class="btn btn-default" (click) = this.servicio.backClicked()>Regresar</button>
    
 		    </div>
 		</form>

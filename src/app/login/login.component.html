@@ -1,7 +1,7 @@
 <div class="row">
-	<h2 class = "ta-center ff-pacifico">
+	<h1 class = "ta-center ff-pacifico">
   		Iniciar sesión
-	</h2>
+	</h1>
 	<br>
 	<div class="col-12">
 		<form [formGroup]="myForm" (ngSubmit)="log()" class = "formulario">
@@ -18,7 +18,7 @@
 	
 		    <div align="center">
 			    <button id = "login" type="submit" class="btn btn-success" [disabled]="!myForm.valid">Iniciar Sesión</button>
-			    <button id = "back" class="btn btn-default" routerLink="/" routerLinkActive="active">Regresar</button>
+			    <button id = "back" type= "button" class="btn btn-default" (click) = this.servicio.backClicked()>Regresar</button>
    
 		    </div>
 		</form>

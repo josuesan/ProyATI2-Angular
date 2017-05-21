@@ -1,5 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
 
+html {
+  min-height: 100%;
+  position: relative;
+}
+body {
+  margin: 0;
+  margin-bottom: 50px;
+}
+
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand, i {
+    color: white;
+}
+
+
+footer { 
+  padding-top: 2px;
+  background-color: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 35px;
+  color: white;
+}
+
+footer .fa-facebook:hover {
+    color: #3b5998;
+
+}
+
+footer .fa-instagram:hover {
+     background: radial-gradient(circle at 33% 100%, #fed373 4%, #f15245 30%, #d92e7f 62%, #9b36b7 85%, #515ecf)
+}
+
+footer .fa-twitter:hover {
+    color: #1da1f2;
+}
+
+
+
 .fs-small{
   font-size: 18px; 
 }
@@ -33,12 +72,3 @@
   text-align : center;
 }
 
-.panel-body{
-	background-color: black;
-}
-#panelbody-id_1{
-	background-color: black;
-}
-.panel-heading h4{
-	text-align: center;
-}
