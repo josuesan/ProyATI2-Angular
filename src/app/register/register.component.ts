@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import { MsgService } from '../msg.service';
 import { LocalStorageService } from '../localstorage.service';
 
+declare var jQuery:any;
+declare var $:any;
 
 
 @Component({
@@ -34,6 +36,13 @@ export class RegisterComponent implements OnInit {
   	}
 
   	ngOnInit() {
+      if (this.serv.get_local_storage() != null){
+        this.servicio.msgs = [];
+        this.servicio.msgs.push({severity:'warn', summary:'', detail:'Ya has iniciado sesión.'});
+        this.router.navigate(['']);
+        setTimeout(() => {
+        this.servicio.msgs = []; }, 5000);
+      }
   	}
 
  /* checkPassword( fieldControl: FormControl) {
@@ -47,11 +56,17 @@ export class RegisterComponent implements OnInit {
   }*/
 
   check(value1, value2) {
-    if (value1 == value2){
+    var tam1 = value1.toString().length;
+    var tam2 = value2.toString().length;
+
+    if (tam1 >= 6 && tam2 >= 6 && value1 == value2){
+      $("#register").attr('disabled',false);
       return true;
     }
     else{
+      $("#register").attr('disabled',true);
       return false;
+      
     } 
   }
 
@@ -73,11 +88,11 @@ export class RegisterComponent implements OnInit {
                   this.servicio.msgs = [];}, 5000);
               }
               else{ 
-                this.router.navigate(['./login']); 
                 this.servicio.msgs = [];
                 this.servicio.msgs.push({severity:'success', summary:'', detail:data.json().mensaje});
                 setTimeout(() => {
                 this.servicio.msgs = [];
+                this.router.navigate(['./login']); 
                 
                 }, 5000);
               }

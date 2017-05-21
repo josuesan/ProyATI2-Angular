@@ -2,6 +2,7 @@
 	<h1 class = "ta-center ff-pacifico">
   		Registrarse
 	</h1>
+	<br>
 	<div class="col-12">
 		<form [formGroup]="myForm" class= "formulario" (ngSubmit)="register()">
 
@@ -38,7 +39,8 @@
 			    <br>
 
 			    <input type="password" class="form-control" formControlName="repeat" placeholder="Repita su contraseña" >
-			    <div class="alert alert-danger" *ngIf="!check(myForm.controls['password'].value , myForm.controls['repeat'].value ) && myForm.controls['repeat'].touched">Su contraseñas no son iguales.</div>
+			    <div class="alert alert-danger" *ngIf="myForm.controls['repeat'].touched && !check(myForm.controls['password'].value , myForm.controls['repeat'].value )">Sus contraseñas no son iguales.</div>
+			    <div class="alert alert-danger" *ngIf="!myForm.controls['repeat'].valid && myForm.controls['repeat'].touched">Tu debes colocar un contraseña válida (6 caracteres mínimos).</div>
 		    </div>
 	
 		    <div align="center">

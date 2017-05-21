@@ -11,7 +11,7 @@
 		    <input type="text" class="form-control" formControlName="name" placeholder="Nombre">
 		    <br>
 		    <div class="alert alert-danger" *ngIf="!myForm.controls['name'].valid && myForm.controls['name'].touched ">Tu debes colocar un nombre válido.</div>
-		    <input type="number" class="form-control" formControlName="price" placeholder="Precio" min="0" >
+		    <input type="number" class="form-control" formControlName="price" placeholder="Precio" min="1" >
 		    <br>
 		    <div class="alert alert-danger" *ngIf="!myForm.controls['price'].valid && myForm.controls['price'].touched ">Tu debes colocar un precio.</div>
 		    <textarea class="form-control" formControlName="description" placeholder="Descripcion"></textarea>

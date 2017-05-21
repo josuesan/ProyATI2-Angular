@@ -23,7 +23,7 @@ const appRoutes: Routes = [
   { path: 'producto/editar/:id', component: ProductsEdit },
   { path: 'home', component: AppComponent },
   { path: 'carrito', component: CartComponent },
-  { path: '', component: FeedComponent },
+  { path: '', component: FeedComponent }
 
 ];
 @NgModule({

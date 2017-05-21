@@ -15,7 +15,7 @@
 	  			<tr *ngFor="let p of carrito" > 
 	  				<td>  <img class="img-thumbnail img-responsive" width="150px" src="{{p.img}}"/> </td>
 					<td > {{ p.name_prod }} </td>
-					<td>  {{ p.price }} $ </td>
+					<td>  {{ p.price }} Bs </td>
 					<td> {{p.cant}}  
 					<input type="button" class="btn btn-primary" value="+" (click)="cant(p.id_user,p.id_prod,'sumar')">
 	    			<input type="button" class="btn btn-primary" value="-" (click)="cant(p.id_user,p.id_prod,'restar')">
@@ -70,7 +70,7 @@
 					  	<tbody class="products_list">
 					  		<tr *ngFor="let p of carrito" > 
 					  			<td > {{ p.name_prod }} </td>
-								<td>  {{ p.price }} $ </td>
+								<td>  {{ p.price }} Bs </td>
 								<td> {{p.cant}} 
 					  		</tr>
 					  			

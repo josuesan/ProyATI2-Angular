@@ -4,12 +4,19 @@
 }
 #show{
    text-align: center;
+   display: flex;
+    justify-content: center;
+}
+
+#show img, #show p{
+  margin-bottom: 30px;
 }
 
 #img{
-    width:30%;
-    
+    width:65%;
+    border:none;   
 }
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -28,4 +35,14 @@ tr:nth-child(even){background-color: #f2f2f2}
 th {
     background-color: #4CAF50;
     color: white;
+}
+
+#ordenar{
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contenido{
+    margin-top: 75px;
 }

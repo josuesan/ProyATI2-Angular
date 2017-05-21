@@ -30,6 +30,6 @@ th {
 .flotante {
     display:scroll;
     position:fixed;
-    bottom:30px;
-    right:30px;
+    bottom:40px;
+    right:40px;
 }

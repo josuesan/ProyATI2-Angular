@@ -1,7 +1,19 @@
 <div class ="container">
-	<h2 class = "ta-center ff-pacifico">
+	<h1 class = "ta-center ff-pacifico">
   		Lista de productos
-	</h2>
+	</h1>
+	<br>
+	<select id = "ordenar" class="form-control" (change)="ord_categoria($event.target.value)">
+		<option value="Todos">Todos</option> 
+  		<option value="Nombre">Nombre</option>
+  		<option value="Precio">Precio</option>
+  		<option value="Camisas">Camisas</option>
+		<option value="Correas">Correas</option>
+  		<option value="Gorras">Gorras</option>
+  		<option value="Pantalones">Pantalones</option>
+  		<option value="Zapatos">Zapatos</option>
+ 	</select>
+	<br>
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12 product-list">
 			
