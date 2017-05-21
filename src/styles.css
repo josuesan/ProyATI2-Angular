@@ -81,3 +81,7 @@ footer .fa-twitter:hover {
 .panel-heading h4{
   text-align: center;
 }
+body{
+  background-image: url("Font.jpg");
+  background-size:100% 100%;
+}
