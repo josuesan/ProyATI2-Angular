@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
                   this.servicio.msgs = [];}, 5000);
               }
               else{
-                this.router.navigate(['./productos']);  
+                this.router.navigate(['/']);  
                 this.servicio.msgs = [];
                 this.servicio.msgs.push({severity:'success', summary:'', detail:data.json().mensaje});
                 setTimeout(() => {

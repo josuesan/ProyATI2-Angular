@@ -72,3 +72,12 @@ footer .fa-twitter:hover {
   text-align : center;
 }
 
+.panel-body{
+  background-color: black;
+}
+#panelbody-id_1{
+  background-color: black;
+}
+.panel-heading h4{
+  text-align: center;
+}

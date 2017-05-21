@@ -17,6 +17,7 @@ import { LocalStorageService } from './localstorage.service';
 import { PerfilComponent } from './perfil/perfil.component';
 import { CommentComponent } from './comment/comment.component';
 import { CartComponent } from './cart/cart.component';
+import { FeedComponent } from './feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CartComponent } from './cart/cart.component';
     RegisterComponent,
     PerfilComponent,
     CommentComponent,
-    CartComponent
+    CartComponent,
+    FeedComponent
   ],
   imports: [
     BrowserModule,
