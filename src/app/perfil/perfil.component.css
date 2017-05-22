@@ -2,3 +2,15 @@
 	width:50%;
 	margin: 0 auto;
 }
+h1{
+	font-size: 50px;
+	color: white;
+}
+label{
+	font-size: 18px;
+	color:white;
+}
+p{
+	font-size: 18px;
+	color:white;
+}
