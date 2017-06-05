@@ -88,12 +88,11 @@ export class RegisterComponent implements OnInit {
                   this.servicio.msgs = [];}, 5000);
               }
               else{ 
-                this.router.navigate(['./login']); 
                 this.servicio.msgs = [];
                 this.servicio.msgs.push({severity:'success', summary:'', detail:data.json().mensaje});
                 setTimeout(() => {
                 this.servicio.msgs = [];
-                
+                this.router.navigate(['./login']);  
                 
                 }, 5000);
               }
