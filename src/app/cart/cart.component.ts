@@ -177,7 +177,7 @@ export class CartComponent implements OnInit {
     	var json = {'NumeroDeTarjeta':formData.NumeroDeTarjeta,
     			'Titular': formData.Titular,
     			'Titular_CI': formData.Titular_CI,
-    			'FechaDeVencimiento': formData.FechaDeVencimiento,
+    			'FechaDeVencimiento': fecha,
     			'token':'9623042773',
     			'NumeroPedido':pedido,
     			'Monto': this.monto,
