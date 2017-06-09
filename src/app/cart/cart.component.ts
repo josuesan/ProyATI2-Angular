@@ -15,8 +15,20 @@ declare var $:any;
 })
 export class CartComponent implements OnInit {
    carrito;
+   monto;
    private user;
-  constructor(public fb: FormBuilder, public http: Http, public servicio: MsgService,public serv: LocalStorageService,private router: Router) { }
+   public myForm: FormGroup; 
+
+  constructor(public fb: FormBuilder, public http: Http, public servicio: MsgService,public serv: LocalStorageService,private router: Router) { 
+	this.myForm = this.fb.group({	
+        Titular: ["",Validators.required],
+        Titular_CI: ["",Validators.required],
+        NumeroDeTarjeta: ["",Validators.compose([Validators.required,Validators.minLength(16), Validators.maxLength(16)])],
+        FechaDeVencimiento: ["",Validators.required],
+  	  	Telefono: ["",Validators.compose([Validators.required,Validators.minLength(11), Validators.maxLength(11)])],
+  	  	Direccion: ["",Validators.required],
+      });
+  }
 
   ngOnInit() {
   	if (this.serv.get_local_storage() == null){
@@ -29,6 +41,7 @@ export class CartComponent implements OnInit {
      }
      else{
      	this.refresh();
+
      }
   	
   }
@@ -139,6 +152,7 @@ export class CartComponent implements OnInit {
     					this.servicio.msgs = []; }, 5000);
 				}
 				else{
+					this.monto = data.json().total;
 					$('#TotalPay').text(data.json().total+"Bs");
 				}
       		}, error => {
@@ -147,6 +161,55 @@ export class CartComponent implements OnInit {
 	}
 
 	pagar(id_user){
+		let formData = this.myForm.value;
+
+		var headers = new Headers();
+    	headers.append('Content-Type', 'application/json');
+
+    	var pedido = Math.floor(Math.random()*1000);
+
+    	var fecha = formData.FechaDeVencimiento.split("-");
+    	var mes = fecha[1];
+    	var year = fecha[0].split("");
+    	var anio = year[2]+year[3];
+    	fecha = mes + '-' + anio;
+
+    	var json = {'NumeroDeTarjeta':formData.NumeroDeTarjeta,
+    			'Titular': formData.Titular,
+    			'Titular_CI': formData.Titular_CI,
+    			'FechaDeVencimiento': fecha,
+    			'token':'9623042773',
+    			'NumeroPedido':pedido,
+    			'Monto': this.monto,
+    			'rif_comercio':'10108795'
+    			}
+
+    	console.log(JSON.stringify(json));
+
+
+ 		this.http.post('https://apiunibank.herokuapp.com/empresas/boton-pago/pago', JSON.stringify(json),{ headers: headers })      
+  			.subscribe(data => {
+              if (data.json().data == '200'){
+              	this.servicio.msgs = [];
+                this.servicio.msgs.push({severity:'success', summary:'', detail:data.json().mensaje});
+                this.actualizar_inventario(id_user);
+              }
+              else{ 
+                this.servicio.msgs = [];
+                this.servicio.msgs.push({severity:'error', summary:'', detail:data.json().mensaje});
+                setTimeout(() => {
+                this.servicio.msgs = [];}, 5000);
+              }
+      }, error => {
+          console.log(error);
+      });
+
+
+		
+
+	}
+
+	actualizar_inventario(id_user){
 		var headers = new Headers();
     	if (this.serv.get_local_storage()!= null) {
       		headers.append( 'Authorization', this.serv.get_local_storage());
@@ -174,7 +237,6 @@ export class CartComponent implements OnInit {
       		}, error => {
           		console.log(error.json());
       		})
-
 	}
 
 }

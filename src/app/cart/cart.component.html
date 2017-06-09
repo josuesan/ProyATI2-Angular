@@ -36,32 +36,10 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2 class = "ff-pacifico">Introduce tus datos para realizar la compra</h2>
+				<h2 class = "ff-pacifico ta-center">Introduce tus datos para realizar la compra</h2>
 			</div>
 			<div class="modal-body">
-				<form>
-					<div class="form-group">
-					    <label for="Foto">Numero de tarjeta de crédito:</label>
-					    <input type="text" class="form-control" id="foto" name="foto">
-					</div>
-					<div class="form-group">
-					    <label for="pwd">Nombre tarjetahabiente:</label>
-					    <input type="text" class="form-control" id="nombre" name="nombre">
-					</div>
-					<div class="form-group">
-					    <label for="descripcion">Cédula:</label>
-					    <input type="text" class="form-control" id="descripcion" name="descripcion">
-					</div>
-					<div class="form-group">
-					    <label for="descripcion">Numero de telefono:</label>
-					    <input type="text" class="form-control" id="descripcion" name="descripcion">
-					</div>
-					<div class="form-group">
-					    <label for="descripcion">Direccion de envío:</label>
-					    <input type="text" class="form-control" id="descripcion" name="descripcion">
-					</div>
-				</form>
-				<h3 class = "ff-pacifico">Factura digital</h3>
+				<h3 class = "ff-pacifico ta-center">Factura digital</h3>
 					<table class="table table-bordered">
 					  	<thead>
 					  		<th>Nombre del Producto</th>
@@ -71,19 +49,54 @@
 					  	<tbody class="products_list">
 					  		<tr *ngFor="let p of carrito" > 
 					  			<td > {{ p.name_prod }} </td>
-								<td>  {{ p.price }} Bs </td>
-								<td> {{p.cant}} 
+								<td>  {{ p.cant }} </td>
+								<td> {{p.price}} Bs </td>
 					  		</tr>
 					  			
 					  	</tbody>
 					</table>					
 				<strong><p class="ta-right">Su pago total es:</p></strong>
 				<strong><p id="TotalPay" class="ta-right"></p></strong>
+				<form [formGroup]="myForm" class= "formulario">
+					<div class="form-group">
+					    <label for="nombre">Nombre tarjetahabiente:</label>
+					    <input type="text" class="form-control" formControlName="Titular">
+					    <div class="alert alert-danger" *ngIf="!myForm.controls['Titular'].valid && myForm.controls['Titular'].touched ">Tu debes colocar el nombre del titular de la tarjeta.</div>
+					</div>
+					<div class="form-group">
+					    <label for="cedula">Cédula:</label>
+					    <input type="text" class="form-control" formControlName="Titular_CI">
+					    <div class="alert alert-danger" *ngIf="!myForm.controls['Titular_CI'].valid && myForm.controls['Titular_CI'].touched ">Tu debes colocar la cédula de identidad del titular de la tarjeta.</div>
+					</div>
+					<div class="form-group">
+					    <label for="tarjeta">Numero de tarjeta de crédito:</label>
+					    <input type="text" class="form-control" formControlName="NumeroDeTarjeta">
+					    <div class="alert alert-danger" *ngIf="!myForm.controls['NumeroDeTarjeta'].valid && myForm.controls['NumeroDeTarjeta'].touched ">Tu debes colocar un número de tarjeta válida.</div>
+					</div>
+					<div class="form-group">
+						<label for="fecha">Fecha de vencimiento:</label>
+						<input type="month" class="form-control" formControlName="FechaDeVencimiento" placeholder="Fecha de Nacimiento">
+						<div class="alert alert-danger" *ngIf="!myForm.controls['FechaDeVencimiento'].valid && myForm.controls['FechaDeVencimiento'].touched ">Tu debes colocar la fecha de vencimiento de la tarjeta.</div>
+					</div>
+					<div class="form-group">
+					    <label for="numero">Número de teléfono:</label>
+					    <input type="text" class="form-control" formControlName="Telefono">
+					    <div class="alert alert-danger" *ngIf="!myForm.controls['Telefono'].valid && myForm.controls['Telefono'].touched ">Tu debes colocar un número de teléfono valido.</div>
+					</div>
+					<div class="form-group">
+					    <label for="direccion">Direccion de envío:</label>
+					    <input type="text" class="form-control" formControlName="Direccion">
+					    <div class="alert alert-danger" *ngIf="!myForm.controls['Direccion'].valid && myForm.controls['Direccion'].touched ">Tu debes colocar una dirección de envío.</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" [disabled]="!myForm.valid" (click)="pagar(this.user)">Pagar</button>
+						<input type="button" class="btn btn-primary" data-dismiss="modal" value="Regresar" onclick="acomodar()">
+				 
+					</div>
+				</form>				
 			</div>
-			<div class="modal-footer">
-				<input type="button" class="btn btn-primary" data-dismiss="modal" value="Regresar" onclick="acomodar()">
-				<input type="button" class="btn btn-primary" data-dismiss="modal" value="Pagar" (click)="pagar(this.user)">
-			</div>
+
 		</div>
 	</div>
 </div>
